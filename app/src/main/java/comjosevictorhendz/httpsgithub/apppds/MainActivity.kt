@@ -4,19 +4,18 @@ package comjosevictorhendz.httpsgithub.apppds
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import 	android.provider.MediaStore
+import android.provider.MediaStore
 import android.content.Intent
 import android.graphics.Bitmap
 import android.widget.Button
-import android.widget.ImageView
-import android.util.Base64
-import java.io.ByteArrayOutputStream
 import android.widget.Toast
+
 
 
 class MainActivity : AppCompatActivity() {
     internal lateinit var image_label_detection: Button
-    internal lateinit var mImageView: ImageView
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,14 +24,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         image_label_detection = findViewById(R.id.image_label_detection)
-        mImageView = findViewById(R.id.mImageView)
-
 
         image_label_detection.setOnClickListener {
-            dispatchTakePictureIntent()
+//            dispatchTakePictureIntent()
+            test1()
         }
-
-
     }
 
     val REQUEST_IMAGE_CAPTURE = 1
@@ -47,32 +43,32 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        val bitmap: Bitmap
 
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data!!.extras.get("data") as Bitmap
-            mImageView.setImageBitmap(imageBitmap)
+        val treatPictures = TreatPictures()
+//
+        bitmap = treatPictures.getBitmap(requestCode, resultCode, data)
 
-
-            try {
-                val encodedImage = encodeImage(imageBitmap)
-                Toast.makeText(applicationContext, "Bombando: " + encodedImage, Toast.LENGTH_LONG).show()
-            }catch (exeption: Exception) {
-                Toast.makeText(applicationContext, "error: " + exeption, Toast.LENGTH_LONG).show()
-
-            }
+        val base64 = treatPictures.encodeBase64(bitmap)
 
 
+        Toast.makeText(applicationContext, "Test: $base64", Toast.LENGTH_LONG).show()
 
-
-        }
     }
 
-    private fun encodeImage(bm: Bitmap): String {
-        val ByteArray = ByteArrayOutputStream()
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, ByteArray)
-        val b = ByteArray.toByteArray()
+    fun test1() {
+        try{
+            val httpRequest = HttpRequest()
+            val tost = httpRequest.test(this)
+//            Toast.makeText(applicationContext, "o response é: "+ tost, Toast.LENGTH_LONG).show()
+        }catch (error: Exception){
+//            Toast.makeText(applicationContext, "error" + error, Toast.LENGTH_LONG).show()
 
-        return Base64.encodeToString(b, Base64.DEFAULT)
+        }
+
+
     }
 
 }
+
+
