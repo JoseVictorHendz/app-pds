@@ -13,6 +13,7 @@ import android.widget.Toast
 
 
 class MainActivity : AppCompatActivity() {
+    var url = "https://api-back-pds.herokuapp.com"
     internal lateinit var image_label_detection: Button
 
 
@@ -58,11 +59,11 @@ class MainActivity : AppCompatActivity() {
 
     fun test1() {
         try{
-            val httpRequest = HttpRequest()
+            val httpRequest = HttpRequest(url)
             val tost = httpRequest.test(this)
-//            Toast.makeText(applicationContext, "o response é: "+ tost, Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, "o response é: "+ tost, Toast.LENGTH_LONG).show()
         }catch (error: Exception){
-//            Toast.makeText(applicationContext, "error" + error, Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, "error" + error, Toast.LENGTH_LONG).show()
 
         }
 
