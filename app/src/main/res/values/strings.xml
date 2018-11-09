@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AppPds</string>
+    <string name="imageLabelDetection">describe image</string>
+    <string name="backToMenu">back to menu</string>
 </resources>

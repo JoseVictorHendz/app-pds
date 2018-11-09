@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.widget.Button
 import android.widget.Toast
+import org.json.JSONObject
 
 
 
@@ -27,8 +28,7 @@ class MainActivity : AppCompatActivity() {
         image_label_detection = findViewById(R.id.image_label_detection)
 
         image_label_detection.setOnClickListener {
-//            dispatchTakePictureIntent()
-            test1()
+            dispatchTakePictureIntent()
         }
     }
 
@@ -52,16 +52,22 @@ class MainActivity : AppCompatActivity() {
 
         val base64 = treatPictures.encodeBase64(bitmap)
 
-
+        val jsonBody = jsonConstruction(base64)
+        httpRequest(jsonBody)
         Toast.makeText(applicationContext, "Test: $base64", Toast.LENGTH_LONG).show()
 
     }
 
-    fun test1() {
+    fun jsonConstruction(value: String): JSONObject {
+        var jsonBody = JSONObject("{\"value\":\""+ value + "\"}");
+
+        return jsonBody
+    }
+
+    fun httpRequest(jsonBody: JSONObject) {
         try{
-            val httpRequest = HttpRequest(url)
-            val tost = httpRequest.test(this)
-            Toast.makeText(applicationContext, "o response é: "+ tost, Toast.LENGTH_LONG).show()
+            val httpRequest = HttpRequest(url, jsonBody)
+            httpRequest.requestApi(this)
         }catch (error: Exception){
             Toast.makeText(applicationContext, "error" + error, Toast.LENGTH_LONG).show()
 
