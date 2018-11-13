@@ -20,6 +20,32 @@
             android:background="@color/buttonColor"
             android:text="@string/imageLabelDetection"
             android:contentDescription="@string/imageLabelDetection"/>
+
+        <Button
+            android:id="@+id/image_propertis_detection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="6dp"
+            android:background="@color/buttonColor"
+            android:text="@string/imagePropertiesDetection"
+            android:contentDescription="@string/imagePropertiesDetection"/>
+
+        <Button
+            android:id="@+id/image_document_text_detection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="6dp"
+            android:background="@color/buttonColor"
+            android:text="@string/imageDocumentTextDetection"
+            android:contentDescription="@string/imageDocumentTextDetection"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="TextView" />
     </LinearLayout>
 
 </LinearLayout>

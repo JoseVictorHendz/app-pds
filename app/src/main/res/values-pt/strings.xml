@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AppPds</string>
     <string name="imageLabelDetection">descrever imagem</string>
-    <string name="backToMenu">voltar ao menu</string>
+    <string name="imagePropertiesDetection">descrever cor</string>
+    <string name="imageDocumentTextDetection">descrever frase</string>
 
 </resources>

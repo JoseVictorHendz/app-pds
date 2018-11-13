@@ -1,12 +1,16 @@
 package comjosevictorhendz.httpsgithub.apppds
 
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
+
+
+
 
 class HttpRequest {
 
@@ -31,7 +35,7 @@ class HttpRequest {
     fun post(context: Context): JsonObjectRequest {
         return JsonObjectRequest(Request.Method.POST, url, jsonBody,
                 Response.Listener { response ->
-                    Toast.makeText(context, "the response is: "+ response, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "the response is: " + response, Toast.LENGTH_LONG).show()
                 },
                 Response.ErrorListener { error ->
                     // TODO: Handle error

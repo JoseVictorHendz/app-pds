@@ -2,16 +2,15 @@ package comjosevictorhendz.httpsgithub.apppds
 
 import android.content.Intent
 import android.graphics.Bitmap
-import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import java.io.ByteArrayOutputStream
 
 
 class TreatPictures {
 
-    fun getBitmap(requestCode: Int, resultCode: Int, data: Intent?): Bitmap {
+    fun getBitmapAndEncodeForBase64(requestCode: Int, resultCode: Int, data: Intent?): String {
         val imageBitmap = data!!.extras.get("data") as Bitmap
-        return imageBitmap
+        return encodeBase64(imageBitmap)
     }
 
     fun encodeBase64(bm: Bitmap): String {

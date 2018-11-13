@@ -1,22 +1,31 @@
-@file:Suppress(   "DEPRECATION")
+@file:Suppress("DEPRECATION")
 
 package comjosevictorhendz.httpsgithub.apppds
 
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.content.Intent
-import android.graphics.Bitmap
 import android.widget.Button
 import android.widget.Toast
 import org.json.JSONObject
-
+import android.provider.AlarmClock.EXTRA_MESSAGE
+import android.widget.EditText
+import android.widget.TextView
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 
 
 class MainActivity : AppCompatActivity() {
-    var url = "https://api-back-pds.herokuapp.com"
+    var url = ""
     internal lateinit var image_label_detection: Button
+    internal lateinit var image_propertis_detection: Button
+    internal lateinit var image_document_text_detection: Button
 
+    internal lateinit var textView: TextView
 
 
 
@@ -26,8 +35,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         image_label_detection = findViewById(R.id.image_label_detection)
+        image_propertis_detection = findViewById(R.id.image_propertis_detection)
+        image_document_text_detection = findViewById(R.id.image_document_text_detection)
+
+        textView = findViewById(R.id.textView);
+
 
         image_label_detection.setOnClickListener {
+            url = "https://api-back-pds.herokuapp.com/image-detection/image-label-detection/pt"
+
+            dispatchTakePictureIntent()
+        }
+
+        image_propertis_detection.setOnClickListener {
+            url = "https://api-back-pds.herokuapp.com/image-detection/image-properties-detection"
+            dispatchTakePictureIntent()
+        }
+
+        image_document_text_detection.setOnClickListener {
+            url = "https://api-back-pds.herokuapp.com/image-detection/image-document-text-detection"
             dispatchTakePictureIntent()
         }
     }
@@ -44,36 +70,57 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val bitmap: Bitmap
 
         val treatPictures = TreatPictures()
-//
-        bitmap = treatPictures.getBitmap(requestCode, resultCode, data)
 
-        val base64 = treatPictures.encodeBase64(bitmap)
+        val base64 = treatPictures.getBitmapAndEncodeForBase64(requestCode, resultCode, data)
 
         val jsonBody = jsonConstruction(base64)
         httpRequest(jsonBody)
-        Toast.makeText(applicationContext, "Test: $base64", Toast.LENGTH_LONG).show()
+//        Toast.makeText(applicationContext, "Test: $base64", Toast.LENGTH_LONG).show()
 
     }
 
     fun jsonConstruction(value: String): JSONObject {
-        var jsonBody = JSONObject("{\"value\":\""+ value + "\"}");
+        var jsonBody = JSONObject("{\"value\":\"" + value + "\"}");
 
         return jsonBody
     }
 
+    // api---------------------------------------------------------------------
     fun httpRequest(jsonBody: JSONObject) {
-        try{
-            val httpRequest = HttpRequest(url, jsonBody)
-            httpRequest.requestApi(this)
-        }catch (error: Exception){
+        try {
+
+//            val httpRequest = HttpRequest(url, jsonBody)
+//            httpRequest.requestApi(this)
+            requestApi(jsonBody)
+
+        } catch (error: Exception) {
             Toast.makeText(applicationContext, "error" + error, Toast.LENGTH_LONG).show()
 
         }
 
+    }
 
+    fun requestApi(jsonBody: JSONObject) {
+        val queue = Volley.newRequestQueue(this)
+
+        val jsonObjectRequest = post(jsonBody)
+
+        queue.add(jsonObjectRequest)
+    }
+
+    fun post(jsonBody: JSONObject): JsonObjectRequest {
+        return JsonObjectRequest(Request.Method.POST, url, jsonBody,
+                Response.Listener { response ->
+                    Toast.makeText(applicationContext, "the response is: " + response, Toast.LENGTH_LONG).show()
+                    textView.setText(response.toString());
+
+                },
+                Response.ErrorListener { error ->
+                    // TODO: Handle error
+                }
+        )
     }
 
 }
