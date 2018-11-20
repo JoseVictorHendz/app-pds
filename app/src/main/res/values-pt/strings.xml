@@ -3,5 +3,7 @@
     <string name="imageLabelDetection">descrever imagem</string>
     <string name="imagePropertiesDetection">descrever cor</string>
     <string name="imageDocumentTextDetection">descrever frase</string>
+    <string name="listenDescription">ouvir a descrição</string>
+    <string name="returnMenu">retornar ao menu</string>
 
 </resources>

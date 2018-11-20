@@ -3,4 +3,6 @@
     <string name="imageLabelDetection">describe image</string>
     <string name="imagePropertiesDetection">describe color</string>
     <string name="imageDocumentTextDetection">describe sentence</string>
+    <string name="listenDescription">listen to the description</string>
+    <string name="returnMenu">return menu</string>
 </resources>

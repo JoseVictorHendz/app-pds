@@ -2,32 +2,26 @@
 
 package comjosevictorhendz.httpsgithub.apppds
 
-import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.content.Intent
+import android.support.v4.content.ContextCompat.startActivity
 import android.widget.Button
 import android.widget.Toast
 import org.json.JSONObject
-import android.provider.AlarmClock.EXTRA_MESSAGE
-import android.widget.EditText
 import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-
+import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
     var url = ""
     internal lateinit var image_label_detection: Button
     internal lateinit var image_propertis_detection: Button
     internal lateinit var image_document_text_detection: Button
-
-    internal lateinit var textView: TextView
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -38,29 +32,26 @@ class MainActivity : AppCompatActivity() {
         image_propertis_detection = findViewById(R.id.image_propertis_detection)
         image_document_text_detection = findViewById(R.id.image_document_text_detection)
 
-        textView = findViewById(R.id.textView);
-
 
         image_label_detection.setOnClickListener {
             url = "https://api-back-pds.herokuapp.com/image-detection/image-label-detection/pt"
-
-            dispatchTakePictureIntent()
+            takePicture()
         }
 
         image_propertis_detection.setOnClickListener {
             url = "https://api-back-pds.herokuapp.com/image-detection/image-properties-detection"
-            dispatchTakePictureIntent()
+            takePicture()
         }
 
         image_document_text_detection.setOnClickListener {
             url = "https://api-back-pds.herokuapp.com/image-detection/image-document-text-detection"
-            dispatchTakePictureIntent()
+            takePicture()
         }
     }
 
     val REQUEST_IMAGE_CAPTURE = 1
 
-    private fun dispatchTakePictureIntent() {
+    private fun takePicture() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(packageManager)?.also {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
@@ -77,8 +68,6 @@ class MainActivity : AppCompatActivity() {
 
         val jsonBody = jsonConstruction(base64)
         httpRequest(jsonBody)
-//        Toast.makeText(applicationContext, "Test: $base64", Toast.LENGTH_LONG).show()
-
     }
 
     fun jsonConstruction(value: String): JSONObject {
@@ -91,8 +80,6 @@ class MainActivity : AppCompatActivity() {
     fun httpRequest(jsonBody: JSONObject) {
         try {
 
-//            val httpRequest = HttpRequest(url, jsonBody)
-//            httpRequest.requestApi(this)
             requestApi(jsonBody)
 
         } catch (error: Exception) {
@@ -114,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         return JsonObjectRequest(Request.Method.POST, url, jsonBody,
                 Response.Listener { response ->
                     Toast.makeText(applicationContext, "the response is: " + response, Toast.LENGTH_LONG).show()
-                    textView.setText(response.toString());
+                    jsonForArray(response)
 
                 },
                 Response.ErrorListener { error ->
@@ -122,6 +109,26 @@ class MainActivity : AppCompatActivity() {
                 }
         )
     }
+
+    fun jsonForArray(jsonObject: JSONObject) {
+
+        var array: Array<String> = Array(10) {""}
+
+        for (i in 0..9) {
+            array[i] = jsonObject.get("value"+i).toString()
+        }
+
+        alternActivity(array)
+    }
+
+    fun alternActivity(array: Array<String>) {
+        val intent = Intent(this, Activity_Description::class.java)
+        // To pass any data to next activity
+        intent.putExtra("array", array)
+        // start your next activity
+        startActivity(intent)
+    }
+
 
 }
 

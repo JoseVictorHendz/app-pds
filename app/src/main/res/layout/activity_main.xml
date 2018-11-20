@@ -6,10 +6,12 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/layoutMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorSecundary"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <Button
             android:id="@+id/image_label_detection"
@@ -18,8 +20,8 @@
             android:layout_gravity="center"
             android:layout_margin="6dp"
             android:background="@color/buttonColor"
-            android:text="@string/imageLabelDetection"
-            android:contentDescription="@string/imageLabelDetection"/>
+            android:contentDescription="@string/imageLabelDetection"
+            android:text="@string/imageLabelDetection" />
 
         <Button
             android:id="@+id/image_propertis_detection"
@@ -28,8 +30,8 @@
             android:layout_gravity="center"
             android:layout_margin="6dp"
             android:background="@color/buttonColor"
-            android:text="@string/imagePropertiesDetection"
-            android:contentDescription="@string/imagePropertiesDetection"/>
+            android:contentDescription="@string/imagePropertiesDetection"
+            android:text="@string/imagePropertiesDetection" />
 
         <Button
             android:id="@+id/image_document_text_detection"
@@ -38,14 +40,10 @@
             android:layout_gravity="center"
             android:layout_margin="6dp"
             android:background="@color/buttonColor"
-            android:text="@string/imageDocumentTextDetection"
-            android:contentDescription="@string/imageDocumentTextDetection"/>
+            android:contentDescription="@string/imageDocumentTextDetection"
+            android:text="@string/imageDocumentTextDetection" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="TextView" />
     </LinearLayout>
+
 
 </LinearLayout>
