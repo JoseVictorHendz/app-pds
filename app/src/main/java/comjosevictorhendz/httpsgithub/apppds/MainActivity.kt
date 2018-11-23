@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
     fun post(jsonBody: JSONObject): JsonObjectRequest {
         return JsonObjectRequest(Request.Method.POST, url, jsonBody,
                 Response.Listener { response ->
-                    Toast.makeText(applicationContext, "the response is: " + response, Toast.LENGTH_LONG).show()
+//                    Toast.makeText(applicationContext, "the response is: " + response, Toast.LENGTH_LONG).show()
                     jsonForArray(response)
 
                 },

@@ -1,5 +1,6 @@
 package comjosevictorhendz.httpsgithub.apppds
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -12,18 +13,25 @@ class Activity_Description : AppCompatActivity() {
 
     private var description: String = ""
     internal lateinit var listen_description: Button
+    internal lateinit var return_menu: Button
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity__description)
 
-        listen_description = findViewById(R.id.image_label_detection)
+        listen_description = findViewById(R.id.listen_description)
+        return_menu = findViewById(R.id.return_menu)
+
 
         listen_description.setOnClickListener {
-            Toast.makeText(applicationContext, "--speak--", Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, "--speak-- " + description, Toast.LENGTH_LONG).show()
         }
 
+        return_menu.setOnClickListener {
+            alternActivity()
+        }
 
 //        //Pega a intent de outra activity
         val it = intent
@@ -48,5 +56,11 @@ class Activity_Description : AppCompatActivity() {
 
         // add TextView to LinearLayout
         description_layout.addView(tv_dynamic)
+    }
+
+    fun alternActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        // start your next activity
+        startActivity(intent)
     }
 }
