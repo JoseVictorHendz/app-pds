@@ -15,6 +15,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
@@ -79,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     // api---------------------------------------------------------------------
     fun httpRequest(jsonBody: JSONObject) {
         try {
-
+            loadingHttpRequest()
             requestApi(jsonBody)
 
         } catch (error: Exception) {
@@ -127,6 +128,15 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("array", array)
         // start your next activity
         startActivity(intent)
+    }
+
+    fun loadingHttpRequest() {
+        val tv_dynamic = TextView(this)
+        tv_dynamic.textSize = 20f
+        tv_dynamic.text = "Teste"
+
+        // add TextView to LinearLayout
+        menu_layout.addView(tv_dynamic)
     }
 
 
