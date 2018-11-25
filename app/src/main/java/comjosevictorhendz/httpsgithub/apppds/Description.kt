@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity__description.*
 import java.util.*
 
 
-class Activity_Description : AppCompatActivity(), TextToSpeech.OnInitListener {
+class Description : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var description: String = ""
     private var tts: TextToSpeech? = null

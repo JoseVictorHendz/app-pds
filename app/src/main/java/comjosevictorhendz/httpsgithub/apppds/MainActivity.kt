@@ -6,17 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.content.Intent
-import android.support.v4.content.ContextCompat.startActivity
 import android.widget.Button
-import android.widget.Toast
-import org.json.JSONObject
-import android.widget.TextView
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
     var url = ""
@@ -67,79 +57,20 @@ class MainActivity : AppCompatActivity() {
 
         val base64 = treatPictures.getBitmapAndEncodeForBase64(requestCode, resultCode, data)
 
-        val jsonBody = jsonConstruction(base64)
-        httpRequest(jsonBody)
+        alternActivity(base64)
     }
 
-    fun jsonConstruction(value: String): JSONObject {
-        var jsonBody = JSONObject("{\"value\":\"" + value + "\"}");
 
-        return jsonBody
-    }
 
-    // api---------------------------------------------------------------------
-    fun httpRequest(jsonBody: JSONObject) {
-        try {
-            loadingHttpRequest()
-            requestApi(jsonBody)
-
-        } catch (error: Exception) {
-            Toast.makeText(applicationContext, "error" + error, Toast.LENGTH_LONG).show()
-
-        }
-
-    }
-
-    fun requestApi(jsonBody: JSONObject) {
-        val queue = Volley.newRequestQueue(this)
-
-        val jsonObjectRequest = post(jsonBody)
-
-        queue.add(jsonObjectRequest)
-    }
-
-    fun post(jsonBody: JSONObject): JsonObjectRequest {
-        return JsonObjectRequest(Request.Method.POST, url, jsonBody,
-                Response.Listener { response ->
-//                    Toast.makeText(applicationContext, "the response is: " + response, Toast.LENGTH_LONG).show()
-                    jsonForArray(response)
-
-                },
-                Response.ErrorListener { error ->
-                    // TODO: Handle error
-                }
-        )
-    }
-
-    fun jsonForArray(jsonObject: JSONObject) {
-
-        var array: Array<String> = Array(10) {""}
-
-        for (i in 0..9) {
-            array[i] = jsonObject.get("value"+i).toString()
-        }
-
-        alternActivity(array)
-    }
-
-    fun alternActivity(array: Array<String>) {
-        val intent = Intent(this, Activity_Description::class.java)
+    fun alternActivity(base64: String) {
+        val intent = Intent(this, LoadingReturnApi::class.java)
         // To pass any data to next activity
-        intent.putExtra("array", array)
+        intent.putExtra("base64", base64)
+        intent.putExtra("url", url)
+
         // start your next activity
         startActivity(intent)
     }
-
-    fun loadingHttpRequest() {
-        val tv_dynamic = TextView(this)
-        tv_dynamic.textSize = 20f
-        tv_dynamic.text = "Teste"
-
-        // add TextView to LinearLayout
-        menu_layout.addView(tv_dynamic)
-    }
-
-
 }
 
 
