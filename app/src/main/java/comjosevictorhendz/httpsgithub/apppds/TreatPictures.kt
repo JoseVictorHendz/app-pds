@@ -8,7 +8,7 @@ import java.io.ByteArrayOutputStream
 
 class TreatPictures {
 
-    fun getBitmapAndEncodeForBase64(requestCode: Int, resultCode: Int, data: Intent?): String {
+    fun getBitmapAndEncodeForBase64(data: Intent?): String {
         val imageBitmap = data!!.extras.get("data") as Bitmap
         return encodeBase64(imageBitmap)
     }

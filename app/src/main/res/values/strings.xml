@@ -5,4 +5,5 @@
     <string name="imageDocumentTextDetection">describe sentence</string>
     <string name="listenDescription">listen to the description</string>
     <string name="returnMenu">return menu</string>
+    <string name="loadingReturnApi">identification is being performed</string>
 </resources>

@@ -43,11 +43,15 @@ class MainActivity : AppCompatActivity() {
     val REQUEST_IMAGE_CAPTURE = 1
 
     private fun takePicture() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(packageManager)?.also {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-            }
-        }
+//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+//            takePictureIntent.resolveActivity(packageManager)?.also {
+//                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+//            }
+//        }
+        val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        callCameraIntent.putExtra("android.intent.extra.quxickCapture",false);
+        startActivityForResult(callCameraIntent, REQUEST_IMAGE_CAPTURE)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -55,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         val treatPictures = TreatPictures()
 
-        val base64 = treatPictures.getBitmapAndEncodeForBase64(requestCode, resultCode, data)
+        val base64 = treatPictures.getBitmapAndEncodeForBase64(data)
 
         alternActivity(base64)
     }
